@@ -1,0 +1,65 @@
+erDiagram
+
+    CHAINS {
+        int id PK
+        string name
+        bigint chain_id
+        string native_symbol
+        timestamp created_at
+    }
+    TOKENS {
+        int id PK
+        int chain_id FK
+        string address
+        string symbol
+        int decimals
+    }
+    VAULTS {
+        int id PK
+        int chain_id FK
+        string address_proxy
+        string address_impl
+        string name
+        string erc_standard
+        int asset_token_id FK
+        boolean is_proxy
+        timestamp created_at
+    }
+    METRIC_TYPES {
+        int id PK
+        string code
+        string name
+        string unit
+        string description
+        boolean is_derived
+    }
+    METRICS {
+        bigint id PK
+        int vault_id FK
+        int metric_type_id FK
+        bigint block_number
+        timestamp block_timestamp
+        timestamp collected_at
+        numeric value_numeric
+        string source
+        bigint run_id FK
+    }
+    INGESTION_RUNS {
+        bigint id PK
+        timestamp started_at
+        timestamp finished_at
+        string status
+        string error_message
+        string script_version
+        string hostname
+    }
+
+    CHAINS ||--o{ TOKENS : has
+    CHAINS ||--o{ VAULTS : has
+
+    TOKENS ||--o{ VAULTS : "vault asset_token"
+
+    VAULTS ||--o{ METRICS : "produces metrics"
+    METRIC_TYPES ||--o{ METRICS : "typed by"
+
+    INGESTION_RUNS ||--o{ METRICS : "written in"
