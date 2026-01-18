@@ -1,7 +1,7 @@
 from web3 import Web3
 
-RPC_URL = "https://go.getblock.io/8e26db89968d45adb8342be164d56341"
-VAULT_ADDRESS = "0x8ECC0B419dfe3AE197BC96f2a03636b5E1BE91db"
+RPC_URL = ""
+VAULT_ADDRESS = ""
 
 
 ERC4626_ABI = [
